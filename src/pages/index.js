@@ -1,0 +1,6 @@
+export { Inicio } from './pages/Inicio'
+export { Contacto } from './pages/Contacto'
+export { Login } from './pages/Login'
+export { QuienesSomos } from './pages/QuienesSomos'
+export { Registro } from './pages/Registro'
+export { Servicios } from './pages/Servicios'
