@@ -1,7 +1,8 @@
-
-
 import './App.css'
+import { Footer } from './components/Footer'
+import { Header } from './components/Header'
 import { NavBar } from './components/NavBar'
+import { Rutas } from './routes/Rutas'
 
 
 function App() {
@@ -9,9 +10,17 @@ function App() {
 
   return (
     <>
-    
+      <Header/>
 
-      <NavBar />
+      <NavBar/>
+
+      <main>
+       <Rutas/>
+
+      </main>
+
+      
+      <Footer/>
     </>
   )
 }

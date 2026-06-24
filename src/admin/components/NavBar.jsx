@@ -1,9 +1,6 @@
 import { NavLink } from "react-router"
-import { useAuth } from "../auth/hooks/useAuth"
 
 export const NavBar = () => {
-    const { isAdmin } = useAuth()
-
     return (
         <>
 
@@ -26,31 +23,23 @@ export const NavBar = () => {
                     </li>
                     <li>
                         <NavLink to={'/quienes-somos'}>
-                            Quienes Somos
+                            Quienes Somo
                         </NavLink>
                     </li>
-                    {isAdmin && (
-                        <li>
-                            <NavLink to={'/admin'}>
-                                Panel de control
-                            </NavLink>
-                        </li>
-                    )}
 
                 </ul>
 
                 <ul>
-                    <li>
+                    <button>
                         <NavLink to={'/login'} >
                             Log in
                         </NavLink>
-                    </li>
-
-                    <li>
+                    </button>
+                    <button>
                         <NavLink to={'/registro'}>
                             Registro
                         </NavLink>
-                    </li>
+                    </button>
                 </ul>
             </nav>
 

@@ -1,10 +1,6 @@
 
 export const Contacto = () => {
-    return (
-        <>
-        <body>
-            
-        </body>
-        </>
-    )
+  return (
+    <div>Contacto</div>
+  )
 }
