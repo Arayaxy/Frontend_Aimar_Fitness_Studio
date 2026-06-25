@@ -1,8 +1,14 @@
-import { NavLink } from "react-router"
+import { NavLink, useNavigate } from "react-router"
 import { useAuth } from "../auth/hooks/useAuth"
 
 export const NavBar = () => {
-    const { isAdmin } = useAuth()
+    const navigate = useNavigate()
+    const { isAuthenticated, isAdmin, logout } = useAuth()
+
+    const cerrarSesion = () => {
+        logout()
+        navigate('/')
+    }
 
     return (
         <>
@@ -40,17 +46,27 @@ export const NavBar = () => {
                 </ul>
 
                 <ul>
-                    <li>
-                        <NavLink to={'/login'} >
-                            Log in
-                        </NavLink>
-                    </li>
+                    {isAuthenticated ? (
+                        <li>
+                            <button type="button" onClick={cerrarSesion}>
+                                Log out
+                            </button>
+                        </li>
+                    ) : (
+                        <>
+                            <li>
+                                <NavLink to={'/login'} >
+                                    Log in
+                                </NavLink>
+                            </li>
 
-                    <li>
-                        <NavLink to={'/registro'}>
-                            Registro
-                        </NavLink>
-                    </li>
+                            <li>
+                                <NavLink to={'/registro'}>
+                                    Registro
+                                </NavLink>
+                            </li>
+                        </>
+                    )}
                 </ul>
             </nav>
 
