@@ -12,8 +12,11 @@ export const useLogin = () => {
   const [cargando, setCargando] = useState(false)
 
   const iniciarSesion = async (evento) => {
+
     evento.preventDefault()
+
     setCargando(true)
+    
     setMensaje('')
 
     try {

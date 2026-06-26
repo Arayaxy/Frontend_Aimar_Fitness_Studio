@@ -42,6 +42,11 @@ export const NavBar = () => {
                             </NavLink>
                         </li>
                     )}
+                    <li>
+                        <NavLink to={'/area-usuarios'}>
+                            Mi Area
+                        </NavLink>
+                    </li>
 
                 </ul>
 

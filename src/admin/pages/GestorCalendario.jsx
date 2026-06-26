@@ -30,6 +30,7 @@ const localizer = dateFnsLocalizer({
     locales
 })
 export const GestorCalendario = () => {
+
     const [view, setView] = useState('week')
     const [date, setDate] = useState(new Date(2026, 5, 24))
 
@@ -59,17 +60,13 @@ export const GestorCalendario = () => {
                 startAccessor="start"
                 endAccessor="end"
                 style={{ height: 600 }}
+                messages={{
+                    today: 'Hoy',
+                    month: 'mensual',
+                    week: 'semanal',
+                    next: 'siguiente'
+                }}
             />
         </section>
     )
 }
-
-
-/* 
-Una vez que tengamos  el calnedario funcional  comenzamos con la gestion de reservas del usuario 
-    empezando creando la ruta para el usuario registrado a su perfil privado 
-    donde podra reservar cita en las clases  donde haya plazas disponibles
-        si no hay hay plazas dispoblibles se maca la calse completa en el calendario general 
-            si hay plazas disponibles  
-
-*/

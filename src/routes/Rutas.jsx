@@ -1,10 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router'
-import { Contacto, Inicio, Login, QuienesSomos, Registro, Servicios } from '../pages/index'
-import { HomePageAdmin } from '../admin/pages/HomePageAdmin'
-import { GestorClases } from '../admin/pages/GestorClases'
-import { GestorCalendario } from '../admin/pages/GestorCalendario'
-import { GestorUsuarios } from '../admin/pages/GestorUsuarios'
-import { RutaAdmin } from '../admin/components/RutaAdmin'
+import { Contacto, Inicio, Login, QuienesSomos, Registro, Servicios, AreaUsuarios, GestorCalendario, GestorUsuarios, HomePageAdmin, RutaAdmin, GestorClases } from '../pages/index'
+
 
 
 export const Rutas = () => {
@@ -44,7 +40,7 @@ export const Rutas = () => {
 
             {/*rutas privadas usuario Registrado*/}
 
-
+            <Route path='/area-usuarios' element={ <AreaUsuarios/>} />
             <Route path='/*' element={<Navigate to={'/'} />} />
 
         </Routes>
