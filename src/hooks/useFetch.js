@@ -15,7 +15,7 @@ export const useFetch = (url, options = {}) => {
             setError(null);
 
             try {
-                const res = await fetch(`http://localhost:3000/api${url}`, {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}${url}`, {
                     ...options,
                     signal: controller.signal,
                 });
