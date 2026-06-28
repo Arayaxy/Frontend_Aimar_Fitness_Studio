@@ -9,7 +9,7 @@ import DateObject from "react-date-object"
 /* 
 Buscar biblioteca de calendario (React big calendar)
         una vez eleguida comprobar que pinte en el componente un calendario simple
-            luego conectarla  a añadir la clase se cargue en el dia especifico 
+            Calendario de clases. Al crear una clase, se mostrará en el día correspondiente.
                 y asi se cargue con la informacion que tenemos 
 
                 // Hacer  imports necesarios (estilos),

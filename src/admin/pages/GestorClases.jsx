@@ -7,7 +7,7 @@ export const GestorClases = () => {
 
   return (
     <section>
-      <h2>Gestionar Clases</h2>
+      <h2>Gestionar clases</h2>
 
       <FormularioClase
         formulario={gestorClases.formulario}

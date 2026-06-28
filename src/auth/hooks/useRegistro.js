@@ -4,6 +4,12 @@ import { useNavigate } from 'react-router'
 import { useAuth } from './useAuth'
 import { useFetch } from '../../hooks/useFetch'
 
+/**
+ * Maneja el formulario de registro.
+ * Crea el usuario en el backend, guarda la sesion y lleva al usuario al inicio.
+ *
+ * @returns {object} Estado y acciones que usa la pagina de registro.
+ */
 export const useRegistro = () => {
   const navigate = useNavigate()
   const { login } = useAuth()
@@ -14,6 +20,12 @@ export const useRegistro = () => {
   const [mensaje, setMensaje] = useState('')
   const [cargando, setCargando] = useState(false)
 
+  /**
+   * Envia los datos del formulario para crear una cuenta nueva.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} evento - Evento del formulario.
+   * @returns {Promise<void>}
+   */
   const registrar = async (evento) => {
     evento.preventDefault()
     setCargando(true)

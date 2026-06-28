@@ -1,10 +1,25 @@
 import { useEffect, useState } from "react";
 
+/**
+ * Hook reutilizable para llamar a la API del backend.
+ * Anade automaticamente el token JWT si existe en localStorage.
+ *
+ * @param {string|null} url - Endpoint opcional que se ejecuta al montar el componente.
+ * @param {object} options - Opciones opcionales para esa primera peticion.
+ * @returns {{data: unknown, loading: boolean, error: string|null, request: Function}}
+ */
 export const useFetch = (url = null, options = {}) => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    /**
+     * Lanza una peticion HTTP contra la API configurada en VITE_API_URL.
+     *
+     * @param {string} endpoint - Ruta relativa de la API, por ejemplo "/clases".
+     * @param {object} config - Metodo, headers y body de la peticion.
+     * @returns {Promise<object>} Respuesta JSON del backend.
+     */
     const request = async (endpoint, config = {}) => {
         setLoading(true);
         setError(null);

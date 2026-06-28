@@ -14,6 +14,12 @@ const formularioInicial = {
 
 const ENTRENADOR_ID = 1
 
+/**
+ * Centraliza la logica del panel admin para crear, editar, listar y borrar clases.
+ * Asi los componentes solo se encargan de mostrar formularios y tablas.
+ *
+ * @returns {object} Estado del gestor de clases y funciones para modificarlo.
+ */
 export const useGestorClases = () => {
   const { request } = useFetch()
   const [clases, setClases] = useState([])
@@ -22,6 +28,11 @@ export const useGestorClases = () => {
   const [mensaje, setMensaje] = useState('Cargando clases...')
   const [cargando, setCargando] = useState(false)
 
+  /**
+   * Trae las clases desde el backend y actualiza la tabla.
+   *
+   * @returns {Promise<void>}
+   */
   const cargarClases = async () => {
     try {
       setMensaje('Cargando clases...')
@@ -43,6 +54,12 @@ export const useGestorClases = () => {
     fetchClases()
   }, [])
 
+  /**
+   * Actualiza un campo de texto del formulario usando su atributo name.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>} evento - Evento del campo modificado.
+   * @returns {void}
+   */
   const manejarCambio = (evento) => {
     const { name, value } = evento.target
 
@@ -52,6 +69,12 @@ export const useGestorClases = () => {
     })
   }
 
+  /**
+   * Guarda la fecha en formato YYYY-MM-DD, que es el formato que espera la API.
+   *
+   * @param {Date|DateObject|null} fecha - Fecha elegida en el calendario.
+   * @returns {void}
+   */
   const manejarCambioFecha = (fecha) => {
     setFormulario({
       ...formulario,
@@ -59,6 +82,13 @@ export const useGestorClases = () => {
     })
   }
 
+  /**
+   * Convierte una hora de JavaScript al formato HH:mm y la guarda en el formulario.
+   *
+   * @param {string} name - Nombre del campo que se va a actualizar.
+   * @param {Date|null} hora - Hora elegida por el usuario.
+   * @returns {void}
+   */
   const manejarCambioHora = (name, hora) => {
     const horaFormateada = hora
       ? `${String(hora.getHours()).padStart(2, '0')}:${String(hora.getMinutes()).padStart(2, '0')}`
@@ -70,17 +100,33 @@ export const useGestorClases = () => {
     })
   }
 
+  /**
+   * Deja el formulario listo para crear una clase nueva.
+   *
+   * @returns {void}
+   */
   const limpiarFormulario = () => {
     setFormulario(formularioInicial)
     setClaseEditando(null)
   }
 
+  /**
+   * Adapta los datos del formulario antes de enviarlos al backend.
+   *
+   * @returns {object} Datos de clase con plazas como numero y entrenador_id incluido.
+   */
   const prepararDatosClase = () => ({
     ...formulario,
     plazas: Number(formulario.plazas),
     entrenador_id: ENTRENADOR_ID
   })
 
+  /**
+   * Crea una clase nueva o actualiza la clase seleccionada para editar.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} evento - Evento del formulario.
+   * @returns {Promise<void>}
+   */
   const guardarClase = async (evento) => {
     evento.preventDefault()
     setCargando(true)
@@ -126,6 +172,12 @@ export const useGestorClases = () => {
     }
   }
 
+  /**
+   * Carga una clase existente en el formulario para poder editarla.
+   *
+   * @param {object} clase - Clase seleccionada desde la tabla.
+   * @returns {void}
+   */
   const seleccionarClaseParaEditar = (clase) => {
     setClaseEditando(clase)
     setFormulario({
@@ -139,6 +191,12 @@ export const useGestorClases = () => {
     setMensaje('Editando clase seleccionada')
   }
 
+  /**
+   * Pide confirmacion y borra una clase del backend.
+   *
+   * @param {number|string} id - ID de la clase a eliminar.
+   * @returns {Promise<void>}
+   */
   const borrarClase = async (id) => {
     const confirmacion = await Swal.fire({
       title: 'Eliminar clase',

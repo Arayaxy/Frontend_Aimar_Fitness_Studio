@@ -3,6 +3,12 @@ import { useNavigate } from 'react-router'
 import { useAuth } from './useAuth'
 import { useFetch } from '../../hooks/useFetch'
 
+/**
+ * Maneja el formulario de login.
+ * Guarda los campos, llama al backend y redirige segun el rol del usuario.
+ *
+ * @returns {object} Estado y acciones que usa la pagina de login.
+ */
 export const useLogin = () => {
   const navigate = useNavigate()
   const { login } = useAuth()
@@ -13,6 +19,12 @@ export const useLogin = () => {
   const [mensaje, setMensaje] = useState('')
   const [cargando, setCargando] = useState(false)
 
+  /**
+   * Envia email y contrasena al backend para iniciar sesion.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} evento - Evento del formulario.
+   * @returns {Promise<void>}
+   */
   const iniciarSesion = async (evento) => {
 
     evento.preventDefault()
