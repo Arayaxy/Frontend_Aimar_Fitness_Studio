@@ -142,10 +142,10 @@ export const useGestorClases = () => {
   const borrarClase = async (id) => {
     const confirmacion = await Swal.fire({
       title: 'Eliminar clase',
-      text: 'Seguro que quieres eliminar esta clase?',
+      text: '¿Seguro que quieres eliminar esta clase?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, eliminar',
+      confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
     })
 

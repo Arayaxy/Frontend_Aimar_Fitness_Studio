@@ -49,10 +49,10 @@ export const AreaUsuarios = () => {
     const reservarClase = async (clase) => {
         const confirmacion = await Swal.fire({
             title: 'Reservar clase',
-            text: `Quieres reservar la clase ${clase.titulo}?`,
+            text: `¿Quieres reservar la clase ${clase.titulo}?`,
             icon: 'question',
             showCancelButton: true,
-            confirmButtonText: 'Si, reservar',
+            confirmButtonText: 'Sí, reservar',
             cancelButtonText: 'Cancelar'
         })
 
@@ -85,10 +85,10 @@ export const AreaUsuarios = () => {
     const eliminarReserva = async (reserva) => {
         const confirmacion = await Swal.fire({
             title: 'Eliminar reserva',
-            text: `Quieres eliminar la reserva de ${reserva.title}?`,
+            text: `¿Quieres eliminar la reserva de ${reserva.title}?`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Si, eliminar',
+            confirmButtonText: 'Sí, eliminar',
             cancelButtonText: 'Cancelar'
         })
 
@@ -154,7 +154,7 @@ export const AreaUsuarios = () => {
             sortable: true
         },
         {
-            name: 'Accion',
+            name: 'Acción',
             cell: (clase) => {
                 const estaReservada = idsClasesReservadas.includes(clase.id)
 
@@ -173,10 +173,10 @@ export const AreaUsuarios = () => {
 
     return (
         <section>
-            {(loadingClases || loadingReservas) && 'cargando'}
+            {(loadingClases || loadingReservas) && 'Cargando'}
             {error && console.log(error)}
 
-            <h2>Mi Area Personal</h2>
+            <h2>Mi área personal</h2>
             <p>Bienvenido {usuario?.nombre}</p>
 
             <DataTable

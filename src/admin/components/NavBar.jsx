@@ -23,7 +23,7 @@ export const NavBar = () => {
                     </li>
                     <li>
                         <NavLink to={'/quienes-somos'}>
-                            Quienes Somo
+                            Quiénes somos
                         </NavLink>
                     </li>
 
@@ -32,7 +32,7 @@ export const NavBar = () => {
                 <ul>
                     <button>
                         <NavLink to={'/login'} >
-                            Log in
+                            Iniciar sesión
                         </NavLink>
                     </button>
                     <button>

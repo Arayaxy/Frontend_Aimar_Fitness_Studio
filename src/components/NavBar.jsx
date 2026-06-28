@@ -8,11 +8,11 @@ export const NavBar = () => {
 
     const cerrarSesion = async () => {
         const confirmacion = await Swal.fire({
-            title: 'Cerrar sesion',
-            text: 'Seguro que quieres cerrar sesion?',
+            title: 'Cerrar sesión',
+            text: '¿Seguro que quieres cerrar sesión?',
             icon: 'question',
             showCancelButton: true,
-            confirmButtonText: 'Si, salir',
+            confirmButtonText: 'Sí, salir',
             cancelButtonText: 'Cancelar'
         })
 
@@ -46,7 +46,7 @@ export const NavBar = () => {
                             </li>
                             <li>
                                 <NavLink to={'/quienes-somos'}>
-                                    Quienes Somos
+                                    Quiénes somos
                                 </NavLink>
                             </li>
                         </>
@@ -61,7 +61,7 @@ export const NavBar = () => {
                     {isAuthenticated && !isAdmin && (
                         <li>
                             <NavLink to={'/area-usuarios'}>
-                                Mi Area
+                                Mi área
                             </NavLink>
                         </li>
                     )}
@@ -73,14 +73,14 @@ export const NavBar = () => {
                     {isAuthenticated ? (
                         <li>
                             <button type="button" onClick={cerrarSesion}>
-                                Log out
+                                Cerrar sesión
                             </button>
                         </li>
                     ) : (
                         <>
                             <li>
                                 <NavLink to={'/login'} >
-                                    Log in
+                                    Iniciar sesión
                                 </NavLink>
                             </li>
 

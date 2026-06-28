@@ -1,6 +1,6 @@
 
 export const QuienesSomos = () => {
   return (
-    <div>QuienesSomos</div>
+    <div>Quiénes somos</div>
   )
 }

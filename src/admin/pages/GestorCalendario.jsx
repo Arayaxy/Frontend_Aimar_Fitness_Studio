@@ -50,10 +50,10 @@ export const GestorCalendario = () => {
 
     return (
         <section>
-            {loading && 'cargando'}
+            {loading && 'Cargando'}
             {error && console.log(error)}
 
-            <h2>Gestionar Calendario</h2>
+            <h2>Gestionar calendario</h2>
             <Calendar
                 localizer={localizer}
                 events={eventosCalendario}
