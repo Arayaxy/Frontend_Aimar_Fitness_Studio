@@ -1,48 +1,58 @@
 import { useEffect, useState } from "react";
 
-export const useFetch = (url, options = {}) => {
+export const useFetch = (url = null, options = {}) => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        if (!url) return;
+    const request = async (endpoint, config = {}) => {
+        setLoading(true);
+        setError(null);
 
-        const controller = new AbortController();
+        try {
+            const token = localStorage.getItem('token')
+
+            const headers = {
+                'Content-Type': 'application/json',
+                ...config.headers
+            }
+
+            if (token) {
+                headers.Authorization = `Bearer ${token}`
+            }
+
+            const res = await fetch(`${import.meta.env.VITE_API_URL}${endpoint}`, {
+                method: config.method || 'GET',
+                headers,
+                body: config.body ? JSON.stringify(config.body) : undefined
+            })
+
+            const result = await res.json()
+
+            if (!res.ok) {
+                throw new Error(result.msg || `Error: ${res.status}`)
+            }
+
+            setData(result)
+            return result
+        } catch (error) {
+            console.log(error)
+            setError(error.message)
+            throw error
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        if (!url) return
 
         const fetchData = async () => {
-            setLoading(true);
-            setError(null);
+            await request(url, options)
+        }
 
-            try {
-                const res = await fetch(`${import.meta.env.VITE_API_URL}${url}`, {
-                    ...options,
-                    signal: controller.signal,
-                });
+        fetchData()
+    }, [url])
 
-                if (!res.ok) {
-                    throw new Error(`Error: ${res.status}`);
-                }
-
-                const result = await res.json();
-                setData(result);
-            } catch (err) {
-                // Ignore abort errors
-                if (err.name !== "AbortError") {
-                    setError(err.message);
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-
-        // Cleanup: cancel the request if component unmounts
-        return () => controller.abort();
-    }, [url]);
-
-    return { data, loading, error };
-};
-
-
+    return { data, loading, error, request }
+}

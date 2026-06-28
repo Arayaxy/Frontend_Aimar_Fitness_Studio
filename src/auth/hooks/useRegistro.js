@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { registrarUsuario } from '../../services/api'
+
 import { useAuth } from './useAuth'
+import { useFetch } from '../../hooks/useFetch'
 
 export const useRegistro = () => {
   const navigate = useNavigate()
   const { login } = useAuth()
+  const { request } = useFetch()
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
   const [contrasena, setContrasena] = useState('')
@@ -18,7 +20,10 @@ export const useRegistro = () => {
     setMensaje('')
 
     try {
-      const resultado = await registrarUsuario(nombre, email, contrasena)
+      const resultado = await request('/auth/register', {
+        method: 'POST',
+        body: { nombre, email, contrasena }
+      })
 
       login(resultado.data, resultado.token)
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { actualizarClase, crearClase, eliminarClase, obtenerClases } from '../../services/api'
+import { useFetch } from '../../hooks/useFetch'
 
 const formularioInicial = {
   titulo: '',
@@ -12,6 +12,7 @@ const formularioInicial = {
 }
 
 export const useGestorClases = () => {
+  const { request } = useFetch()
   const [clases, setClases] = useState([])
   const [formulario, setFormulario] = useState(formularioInicial)
   const [claseEditando, setClaseEditando] = useState(null)
@@ -22,7 +23,7 @@ export const useGestorClases = () => {
     try {
       setMensaje('Cargando clases...')
 
-      const resultado = await obtenerClases()
+      const resultado = await request('/clases')
 
       setClases(resultado.data)
       setMensaje('')
@@ -32,14 +33,11 @@ export const useGestorClases = () => {
   }
 
   useEffect(() => {
-    obtenerClases()
-      .then((resultado) => {
-        setClases(resultado.data)
-        setMensaje('')
-      })
-      .catch((error) => {
-        setMensaje(error.message)
-      })
+    const fetchClases = async () => {
+      await cargarClases()
+    }
+
+    fetchClases()
   }, [])
 
   const manejarCambio = (evento) => {
@@ -71,10 +69,16 @@ export const useGestorClases = () => {
       const datosClase = prepararDatosClase()
 
       if (claseEditando) {
-        await actualizarClase(claseEditando.id, datosClase)
+        await request(`/clases/${claseEditando.id}`, {
+          method: 'PATCH',
+          body: datosClase
+        })
         setMensaje('Clase actualizada correctamente')
       } else {
-        await crearClase(datosClase)
+        await request('/clases', {
+          method: 'POST',
+          body: datosClase
+        })
         setMensaje('Clase creada correctamente')
       }
 
@@ -106,7 +110,9 @@ export const useGestorClases = () => {
     setMensaje('')
 
     try {
-      await eliminarClase(id)
+      await request(`/clases/${id}`, {
+        method: 'DELETE'
+      })
       setMensaje('Clase eliminada correctamente')
       await cargarClases()
     } catch (error) {

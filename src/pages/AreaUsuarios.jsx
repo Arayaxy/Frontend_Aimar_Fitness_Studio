@@ -24,13 +24,14 @@ export const AreaUsuarios = () => {
     const [view, setView] = useState('week')
     const [date, setDate] = useState(new Date(2026, 5, 24))
     const { usuario } = useContext(AuthContext)
-    const { data, loading, error } = useFetch(`/reservas/${usuario.id}`)
-
+    const { data, loading, error } = useFetch(usuario ? `/reservas/${usuario.id}` : null)
+// console.log(usuario)
     const reservasCalendario = data?.data.map(reservas => ({
         title: reservas.titulo,
         start: new Date(`${reservas.fecha.slice(0, 10)}T${reservas.hora_inicio}`),
         end: new Date(`${reservas.fecha.slice(0, 10)}T${reservas.hora_fin}`),
     })) || []
+
     console.log(reservasCalendario)
 
    
@@ -39,9 +40,9 @@ export const AreaUsuarios = () => {
 
             {loading && 'cargando'}
             {error && console.log(error)}
-            
+
             <h2>Mi Area Personal</h2>
-            <p> BIenvenido ${ }</p>
+            <p>Bienvenido {usuario?.nombre}</p>
 
             <Calendar
                 localizer={localizer}
@@ -61,6 +62,7 @@ export const AreaUsuarios = () => {
                 messages={{
                     today: 'Hoy',
                     month: 'mensual',
+                    previous: 'anterior',
                     week: 'semanal',
                     next: 'siguiente',
 
