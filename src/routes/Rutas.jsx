@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router'
-import { Contacto, Inicio, Login, QuienesSomos, Registro, Servicios, AreaUsuarios, GestorCalendario, GestorUsuarios, HomePageAdmin, RutaAdmin, GestorClases } from '../pages/index'
+import { Contacto, Inicio, Login, QuienesSomos, Registro, Servicios, AreaUsuarios, GestorCalendario, GestorUsuarios, HomePageAdmin, RutaAdmin, GestorClases, RutaPrivadaUsuario} from '../pages/index'
 
 
 
@@ -40,10 +40,14 @@ export const Rutas = () => {
 
             {/*rutas privadas usuario Registrado*/}
 
-            <Route path='/area-usuarios' element={ <AreaUsuarios/>} />
+            <Route path='/area-usuarios' element={
+                <RutaPrivadaUsuario>
+                    <AreaUsuarios />
+                </RutaPrivadaUsuario>
+            } />
+
             <Route path='/*' element={<Navigate to={'/'} />} />
 
         </Routes>
     )
 }
-

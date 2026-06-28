@@ -15,26 +15,30 @@ export const NavBar = () => {
 
             <nav>
                 <ul>
-                    <li>
-                        <NavLink to={'/'}>
-                            Inicio
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to={'/servicios'}>
-                            Servicios
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to={'/contacto'}>
-                            Contacto
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to={'/quienes-somos'}>
-                            Quienes Somos
-                        </NavLink>
-                    </li>
+                    {!isAdmin && (
+                        <>
+                            <li>
+                                <NavLink to={'/'}>
+                                    Inicio
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to={'/servicios'}>
+                                    Servicios
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to={'/contacto'}>
+                                    Contacto
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to={'/quienes-somos'}>
+                                    Quienes Somos
+                                </NavLink>
+                            </li>
+                        </>
+                    )}
                     {isAdmin && (
                         <li>
                             <NavLink to={'/admin'}>
@@ -42,11 +46,14 @@ export const NavBar = () => {
                             </NavLink>
                         </li>
                     )}
-                    <li>
-                        <NavLink to={'/area-usuarios'}>
-                            Mi Area
-                        </NavLink>
-                    </li>
+                    {isAuthenticated && !isAdmin && (
+                        <li>
+                            <NavLink to={'/area-usuarios'}>
+                                Mi Area
+                            </NavLink>
+                        </li>
+                    )}
+
 
                 </ul>
 
