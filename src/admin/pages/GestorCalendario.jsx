@@ -5,6 +5,7 @@ import { format, parse, startOfWeek, getDay } from "date-fns"
 import { es } from "date-fns/locale"
 import { useState } from "react"
 import { useFetch } from "../../hooks/useFetch"
+import DateObject from "react-date-object"
 /* 
 Buscar biblioteca de calendario (React big calendar)
         una vez eleguida comprobar que pinte en el componente un calendario simple
@@ -36,11 +37,15 @@ export const GestorCalendario = () => {
 
     const { data, loading, error } = useFetch('/clases')
 
-    const eventosCalendario = data?.data.map(clase => ({
-        title: clase.titulo,
-        start: new Date(`${clase.fecha.slice(0, 10)}T${clase.hora_inicio}`),
-        end: new Date(`${clase.fecha.slice(0, 10)}T${clase.hora_fin}`)
-    })) || []
+    const eventosCalendario = data?.data.map(clase => {
+        const fecha = new DateObject(clase.fecha).format("YYYY-MM-DD")
+
+        return {
+            title: clase.titulo,
+            start: new Date(`${fecha}T${clase.hora_inicio}`),
+            end: new Date(`${fecha}T${clase.hora_fin}`)
+        }
+    }) || []
 
 
     return (

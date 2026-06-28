@@ -5,11 +5,12 @@ import { es } from "date-fns/locale"
 import { useContext, useState } from "react"
 import { useFetch } from "../hooks/useFetch"
 import { AuthContext } from "../auth/context/AuthContext"
+import DateObject from "react-date-object"
+import DataTable from "react-data-table-component"
+import Swal from "sweetalert2"
 
 const locales = {
-
     es
-
 }
 
 const localizer = dateFnsLocalizer({
@@ -24,25 +25,169 @@ export const AreaUsuarios = () => {
     const [view, setView] = useState('week')
     const [date, setDate] = useState(new Date(2026, 5, 24))
     const { usuario } = useContext(AuthContext)
-    const { data, loading, error } = useFetch(usuario ? `/reservas/${usuario.id}` : null)
-// console.log(usuario)
-    const reservasCalendario = data?.data.map(reservas => ({
-        title: reservas.titulo,
-        start: new Date(`${reservas.fecha.slice(0, 10)}T${reservas.hora_inicio}`),
-        end: new Date(`${reservas.fecha.slice(0, 10)}T${reservas.hora_fin}`),
-    })) || []
 
-    console.log(reservasCalendario)
+    const { data: dataClases, loading: loadingClases } = useFetch('/clases')
+    const {
+        data: dataReservas,
+        loading: loadingReservas,
+        error,
+        request: requestReservas
+    } = useFetch(usuario ? `/reservas/${usuario.id}` : null)
+    const { request: requestAcciones } = useFetch()
 
-   
+    const reservas = dataReservas?.data || []
+    const clases = dataClases?.data || []
+
+    const idsClasesReservadas = reservas.map((reserva) => reserva.clase_id)
+
+    const recargarReservas = async () => {
+        if (!usuario) return
+
+        await requestReservas(`/reservas/${usuario.id}`)
+    }
+
+    const reservarClase = async (clase) => {
+        const confirmacion = await Swal.fire({
+            title: 'Reservar clase',
+            text: `Quieres reservar la clase ${clase.titulo}?`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Si, reservar',
+            cancelButtonText: 'Cancelar'
+        })
+
+        if (!confirmacion.isConfirmed) return
+
+        try {
+            await requestAcciones(`/reservas/${usuario.id}/${clase.id}`, {
+                method: 'POST'
+            })
+
+            await recargarReservas()
+
+            await Swal.fire({
+                title: 'Clase reservada',
+                text: 'La clase se ha reservado correctamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            })
+
+        } catch (error) {
+            await Swal.fire({
+                title: 'No se pudo reservar',
+                text: error.message,
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            })
+        }
+    }
+
+    const eliminarReserva = async (reserva) => {
+        const confirmacion = await Swal.fire({
+            title: 'Eliminar reserva',
+            text: `Quieres eliminar la reserva de ${reserva.title}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, eliminar',
+            cancelButtonText: 'Cancelar'
+        })
+
+        if (!confirmacion.isConfirmed) return
+
+        try {
+            await requestAcciones(`/reservas/${reserva.id}`, {
+                method: 'DELETE'
+            })
+
+            await recargarReservas()
+
+            await Swal.fire({
+                title: 'Reserva eliminada',
+                text: 'La reserva se ha eliminado correctamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            })
+
+        } catch (error) {
+            await Swal.fire({
+                title: 'No se pudo eliminar',
+                text: error.message,
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            })
+        }
+    }
+
+    const reservasCalendario = reservas.map((reserva) => {
+        const fecha = new DateObject(reserva.fecha).format("YYYY-MM-DD")
+
+        return {
+            id: reserva.id,
+            title: reserva.titulo,
+            start: new Date(`${fecha}T${reserva.hora_inicio}`),
+            end: new Date(`${fecha}T${reserva.hora_fin}`)
+        }
+    })
+
+    const columnas = [
+        {
+            name: 'Clase',
+            selector: (clase) => clase.titulo,
+            sortable: true
+        },
+        {
+            name: 'Fecha',
+            selector: (clase) => new DateObject(clase.fecha).format('DD/MM/YYYY'),
+            sortable: true
+        },
+        {
+            name: 'Inicio',
+            selector: (clase) => clase.hora_inicio
+        },
+        {
+            name: 'Fin',
+            selector: (clase) => clase.hora_fin
+        },
+        {
+            name: 'Plazas',
+            selector: (clase) => clase.plazas,
+            sortable: true
+        },
+        {
+            name: 'Accion',
+            cell: (clase) => {
+                const estaReservada = idsClasesReservadas.includes(clase.id)
+
+                return (
+                    <button
+                        type="button"
+                        disabled={estaReservada}
+                        onClick={() => { reservarClase(clase) }}
+                    >
+                        {estaReservada ? 'Reservada' : 'Reservar'}
+                    </button>
+                )
+            }
+        }
+    ]
+
     return (
         <section>
-
-            {loading && 'cargando'}
+            {(loadingClases || loadingReservas) && 'cargando'}
             {error && console.log(error)}
 
             <h2>Mi Area Personal</h2>
             <p>Bienvenido {usuario?.nombre}</p>
+
+            <DataTable
+                title="Clases disponibles"
+                columns={columnas}
+                data={clases}
+                pagination
+                highlightOnHover
+                progressPending={loadingClases}
+                noDataComponent="No hay clases disponibles"
+            />
 
             <Calendar
                 localizer={localizer}
@@ -59,45 +204,15 @@ export const AreaUsuarios = () => {
                 step={60}
                 timeslots={1}
                 style={{ height: 600 }}
+                onSelectEvent={eliminarReserva}
                 messages={{
                     today: 'Hoy',
                     month: 'mensual',
                     previous: 'anterior',
                     week: 'semanal',
-                    next: 'siguiente',
-
+                    next: 'siguiente'
                 }}
             />
-
         </section>
-
-
-
-
-
-
-        /*
-        
-
-        1- conseguir que se pinte el calendario completo sin reservas 
-        (mirar si se puede modificar el horario para que sea de 9am a 9pm para reducir el tamaño del calendario)
-
-            -impottar big calendar es el componente que pintara el calendario
-
-        2- hacer que se pinten las reservas por id de cada usuario 
-
-        3- una vez que tengamos toodas las reservas de cada usuario  al clicar en el calendario 
-        que aparezca un boton de eliminar reserva incluir sweet alert para avisos (desea eliminar esta clase ) 
-        (mas adelante incluir modificar  reserva).
-
-        */
-
-        /* 
-        1- hacer que se pinte la tabla vacia
-        2- hacer que se pinten las clases que estan metidas en el calendario general 
-        3- añadirle el boton de reservar 
-        4 cuando se de al boton de reservar la clase se añade al calendario superior 
-        
-        */
     )
 }

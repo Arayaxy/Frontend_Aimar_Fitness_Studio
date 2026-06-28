@@ -1,11 +1,23 @@
 import { NavLink, useNavigate } from "react-router"
 import { useAuth } from "../auth/hooks/useAuth"
+import Swal from "sweetalert2"
 
 export const NavBar = () => {
     const navigate = useNavigate()
     const { isAuthenticated, isAdmin, logout } = useAuth()
 
-    const cerrarSesion = () => {
+    const cerrarSesion = async () => {
+        const confirmacion = await Swal.fire({
+            title: 'Cerrar sesion',
+            text: 'Seguro que quieres cerrar sesion?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Si, salir',
+            cancelButtonText: 'Cancelar'
+        })
+
+        if (!confirmacion.isConfirmed) return
+
         logout()
         navigate('/')
     }

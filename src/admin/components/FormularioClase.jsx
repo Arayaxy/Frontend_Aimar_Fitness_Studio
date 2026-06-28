@@ -1,11 +1,28 @@
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+
 export const FormularioClase = ({
   formulario,
   claseEditando,
   cargando,
   manejarCambio,
+  manejarCambioFecha,
+  manejarCambioHora,
   guardarClase,
   limpiarFormulario
 }) => {
+  const fechaSeleccionada = formulario.fecha
+    ? new Date(`${formulario.fecha}T00:00`)
+    : null
+
+  const horaInicioSeleccionada = formulario.hora_inicio
+    ? new Date(`2000-01-01T${formulario.hora_inicio}`)
+    : null
+
+  const horaFinSeleccionada = formulario.hora_fin
+    ? new Date(`2000-01-01T${formulario.hora_fin}`)
+    : null
+
   return (
     <form onSubmit={guardarClase}>
       <input
@@ -24,27 +41,35 @@ export const FormularioClase = ({
         onChange={manejarCambio}
       />
 
-      <input
-        type="date"
-        name="fecha"
-        value={formulario.fecha}
-        onChange={manejarCambio}
+      <DatePicker
+        selected={fechaSeleccionada}
+        onChange={manejarCambioFecha}
+        dateFormat="dd/MM/yyyy"
+        placeholderText="Fecha"
         required
       />
 
-      <input
-        type="time"
-        name="hora_inicio"
-        value={formulario.hora_inicio}
-        onChange={manejarCambio}
+      <DatePicker
+        selected={horaInicioSeleccionada}
+        onChange={(hora) => { manejarCambioHora('hora_inicio', hora) }}
+        showTimeSelect
+        showTimeSelectOnly
+        timeIntervals={15}
+        timeCaption="Inicio"
+        dateFormat="HH:mm"
+        placeholderText="Hora inicio"
         required
       />
 
-      <input
-        type="time"
-        name="hora_fin"
-        value={formulario.hora_fin}
-        onChange={manejarCambio}
+      <DatePicker
+        selected={horaFinSeleccionada}
+        onChange={(hora) => { manejarCambioHora('hora_fin', hora) }}
+        showTimeSelect
+        showTimeSelectOnly
+        timeIntervals={15}
+        timeCaption="Fin"
+        dateFormat="HH:mm"
+        placeholderText="Hora fin"
         required
       />
 
@@ -53,15 +78,6 @@ export const FormularioClase = ({
         name="plazas"
         placeholder="Plazas"
         value={formulario.plazas}
-        onChange={manejarCambio}
-        required
-      />
-
-      <input
-        type="number"
-        name="entrenador_id"
-        placeholder="ID del entrenador"
-        value={formulario.entrenador_id}
         onChange={manejarCambio}
         required
       />

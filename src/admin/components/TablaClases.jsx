@@ -1,4 +1,5 @@
 import DataTable from 'react-data-table-component'
+import DateObject from 'react-date-object'
 
 export const TablaClases = ({
   clases,
@@ -19,7 +20,7 @@ export const TablaClases = ({
     },
     {
       name: 'Fecha',
-      selector: (clase) => clase.fecha,
+      selector: (clase) => new DateObject(clase.fecha).format('DD/MM/YYYY'),
       sortable: true
     },
     {
@@ -37,7 +38,7 @@ export const TablaClases = ({
     },
     {
       name: 'Entrenador',
-      selector: (clase) => clase.entrenador_id,
+      selector: () => 'Aimar',
       sortable: true
     },
     {

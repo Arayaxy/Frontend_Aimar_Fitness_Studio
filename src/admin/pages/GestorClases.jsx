@@ -14,6 +14,8 @@ export const GestorClases = () => {
         claseEditando={gestorClases.claseEditando}
         cargando={gestorClases.cargando}
         manejarCambio={gestorClases.manejarCambio}
+        manejarCambioFecha={gestorClases.manejarCambioFecha}
+        manejarCambioHora={gestorClases.manejarCambioHora}
         guardarClase={gestorClases.guardarClase}
         limpiarFormulario={gestorClases.limpiarFormulario}
       />
