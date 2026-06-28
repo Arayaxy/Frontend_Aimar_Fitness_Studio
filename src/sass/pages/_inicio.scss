@@ -68,6 +68,17 @@
     line-height: 1.6;
 }
 
+.inicio-servicios__acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.inicio-servicios__boton {
+    flex: 1 1 120px;
+}
+
 @media (min-width: $bp-tablet) {
     .inicio-portada {
         grid-template-columns: 1fr 1fr;

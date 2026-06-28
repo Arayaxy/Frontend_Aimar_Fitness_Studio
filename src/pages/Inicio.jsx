@@ -33,25 +33,40 @@ export const Inicio = () => {
           <article className="inicio-servicios__tarjeta">
             <h3 className="inicio-servicios__tarjeta-titulo">Entrenamiento individual</h3>
             <p className="inicio-servicios__tarjeta-texto">Sesiones adaptadas a tu objetivo, nivel y ritmo.</p>
-            <button className="boton boton--secundario inicio-servicios__boton" type="button" onClick={() => { navigate('/servicios') }}>
-              Ver más
-            </button>
+            <div className="inicio-servicios__acciones">
+              <button className="boton boton--secundario inicio-servicios__boton" type="button" onClick={() => { navigate('/servicios') }}>
+                Ver más
+              </button>
+              <button className="boton boton--principal inicio-servicios__boton" type="button" onClick={() => { navigate('/area-usuarios') }}>
+                Reservar
+              </button>
+            </div>
           </article>
 
           <article className="inicio-servicios__tarjeta">
             <h3 className="inicio-servicios__tarjeta-titulo">Entrenamiento grupal</h3>
             <p className="inicio-servicios__tarjeta-texto">Clases dinámicas para entrenar con energía y constancia.</p>
-            <button className="boton boton--principal inicio-servicios__boton" type="button" onClick={() => { navigate('/area-usuarios') }}>
-              Reservar
-            </button>
+            <div className="inicio-servicios__acciones">
+              <button className="boton boton--secundario inicio-servicios__boton" type="button" onClick={() => { navigate('/servicios') }}>
+                Ver más
+              </button>
+              <button className="boton boton--principal inicio-servicios__boton" type="button" onClick={() => { navigate('/area-usuarios') }}>
+                Reservar
+              </button>
+            </div>
           </article>
 
           <article className="inicio-servicios__tarjeta">
             <h3 className="inicio-servicios__tarjeta-titulo">Entrenamiento online</h3>
             <p className="inicio-servicios__tarjeta-texto">Planificación y seguimiento para entrenar desde donde quieras.</p>
-            <button className="boton boton--secundario inicio-servicios__boton" type="button" onClick={() => { navigate('/contacto') }}>
-              Consultar
-            </button>
+            <div className="inicio-servicios__acciones">
+              <button className="boton boton--secundario inicio-servicios__boton" type="button" onClick={() => { navigate('/servicios') }}>
+                Ver más
+              </button>
+              <button className="boton boton--principal inicio-servicios__boton" type="button" onClick={() => { navigate('/area-usuarios') }}>
+                Reservar
+              </button>
+            </div>
           </article>
         </div>
       </section>
