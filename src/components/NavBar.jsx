@@ -23,79 +23,71 @@ export const NavBar = () => {
     }
 
     return (
-        <>
-
-            <nav>
-                <ul>
-                    {!isAdmin && (
-                        <>
-                            <li>
-                                <NavLink to={'/'}>
-                                    Inicio
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={'/servicios'}>
-                                    Servicios
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={'/contacto'}>
-                                    Contacto
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={'/quienes-somos'}>
-                                    Quiénes somos
-                                </NavLink>
-                            </li>
-                        </>
-                    )}
-                    {isAdmin && (
-                        <li>
-                            <NavLink to={'/admin'}>
-                                Panel de control
+        <nav className="navegacion">
+            <ul className="navegacion__lista">
+                {!isAdmin && (
+                    <>
+                        <li className="navegacion__item">
+                            <NavLink className="navegacion__enlace" to={'/'}>
+                                Inicio
                             </NavLink>
                         </li>
-                    )}
-                    {isAuthenticated && !isAdmin && (
-                        <li>
-                            <NavLink to={'/area-usuarios'}>
-                                Mi área
+                        <li className="navegacion__item">
+                            <NavLink className="navegacion__enlace" to={'/servicios'}>
+                                Servicios
                             </NavLink>
                         </li>
-                    )}
-
-
-                </ul>
-
-                <ul>
-                    {isAuthenticated ? (
-                        <li>
-                            <button type="button" onClick={cerrarSesion}>
-                                Cerrar sesión
-                            </button>
+                        <li className="navegacion__item">
+                            <NavLink className="navegacion__enlace" to={'/contacto'}>
+                                Contacto
+                            </NavLink>
                         </li>
-                    ) : (
-                        <>
-                            <li>
-                                <NavLink to={'/login'} >
-                                    Iniciar sesión
-                                </NavLink>
-                            </li>
+                        <li className="navegacion__item">
+                            <NavLink className="navegacion__enlace" to={'/quienes-somos'}>
+                                Quiénes somos
+                            </NavLink>
+                        </li>
+                    </>
+                )}
+                {isAdmin && (
+                    <li className="navegacion__item">
+                        <NavLink className="navegacion__enlace" to={'/admin'}>
+                            Panel de control
+                        </NavLink>
+                    </li>
+                )}
+                {isAuthenticated && !isAdmin && (
+                    <li className="navegacion__item">
+                        <NavLink className="navegacion__enlace" to={'/area-usuarios'}>
+                            Mi área
+                        </NavLink>
+                    </li>
+                )}
+            </ul>
 
-                            <li>
-                                <NavLink to={'/registro'}>
-                                    Registro
-                                </NavLink>
-                            </li>
-                        </>
-                    )}
-                </ul>
-            </nav>
+            <ul className="navegacion__acciones">
+                {isAuthenticated ? (
+                    <li className="navegacion__item">
+                        <button className="boton boton--secundario" type="button" onClick={cerrarSesion}>
+                            Cerrar sesión
+                        </button>
+                    </li>
+                ) : (
+                    <>
+                        <li className="navegacion__item">
+                            <NavLink className="navegacion__enlace" to={'/login'} >
+                                Iniciar sesión
+                            </NavLink>
+                        </li>
 
-
-
-        </>
+                        <li className="navegacion__item">
+                            <NavLink className="boton boton--principal" to={'/registro'}>
+                                Registro
+                            </NavLink>
+                        </li>
+                    </>
+                )}
+            </ul>
+        </nav>
     )
 }

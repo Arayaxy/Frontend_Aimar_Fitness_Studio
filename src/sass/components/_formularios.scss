@@ -1,0 +1,47 @@
+@use '../base/variables' as *;
+
+.formulario {
+  display: grid;
+  gap: 1rem;
+}
+
+.formulario__campo {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.formulario__etiqueta {
+  color: $color-principal;
+  font-weight: 700;
+}
+
+.formulario__input,
+.formulario textarea,
+.formulario select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid $color-borde;
+  border-radius: $radio;
+  padding: 0.75rem 0.9rem;
+  background-color: $color-superficie;
+  color: $color-texto;
+}
+
+.formulario__input:focus,
+.formulario textarea:focus,
+.formulario select:focus {
+  outline: 2px solid $color-principal-suave;
+  border-color: $color-principal;
+}
+
+.formulario__boton {
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+@media (min-width: $bp-tablet) {
+  .formulario__boton {
+    width: auto;
+    justify-self: start;
+  }
+}

@@ -12,34 +12,43 @@ export const Login = () => {
   } = useLogin()
 
   return (
-    <section>
-      <h1>Iniciar sesión</h1>
+    <section className="auth">
+      <div className="auth__contenedor">
+        <h1 className="auth__titulo">Iniciar sesión</h1>
+        <p className="auth__texto">Accede a tu área personal para gestionar tus reservas.</p>
 
-      <form onSubmit={iniciarSesion}>
-        <label htmlFor="email">Correo electrónico</label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(evento) => setEmail(evento.target.value)}
-          required
-        />
+        <form className="formulario" onSubmit={iniciarSesion}>
+          <div className="formulario__campo">
+            <label className="formulario__etiqueta" htmlFor="email">Correo electrónico</label>
+            <input
+              className="formulario__input"
+              id="email"
+              type="email"
+              value={email}
+              onChange={(evento) => setEmail(evento.target.value)}
+              required
+            />
+          </div>
 
-        <label htmlFor="contrasena">Contraseña</label>
-        <input
-          id="contrasena"
-          type="password"
-          value={contrasena}
-          onChange={(evento) => setContrasena(evento.target.value)}
-          required
-        />
+          <div className="formulario__campo">
+            <label className="formulario__etiqueta" htmlFor="contrasena">Contraseña</label>
+            <input
+              className="formulario__input"
+              id="contrasena"
+              type="password"
+              value={contrasena}
+              onChange={(evento) => setContrasena(evento.target.value)}
+              required
+            />
+          </div>
 
-        <button type="submit" disabled={cargando}>
-          {cargando ? 'Entrando...' : 'Entrar'}
-        </button>
-      </form>
+          <button className="boton boton--principal formulario__boton" type="submit" disabled={cargando}>
+            {cargando ? 'Entrando...' : 'Entrar'}
+          </button>
+        </form>
 
-      {mensaje && <p>{mensaje}</p>}
+        {mensaje && <p className="auth__mensaje">{mensaje}</p>}
+      </div>
     </section>
   )
 }

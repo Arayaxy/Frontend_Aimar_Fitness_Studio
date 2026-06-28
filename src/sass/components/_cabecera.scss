@@ -1,0 +1,33 @@
+@use '../base/variables' as *;
+
+.cabecera {
+  width: min(100% - 2rem, $ancho-contenido);
+  margin: 0 auto;
+  padding: 0.75rem 0;
+}
+
+.cabecera__logo {
+  width: min(100%, 220px);
+  margin: 0 auto;
+}
+
+@media (min-width: $bp-tablet) {
+  .cabecera {
+    padding: 1.25rem 0;
+  }
+
+  .cabecera__logo {
+    width: 320px;
+    margin: 0;
+  }
+}
+
+@media (min-width: $bp-desktop) {
+  .cabecera {
+    padding: 0.75rem 0;
+  }
+
+  .cabecera__logo {
+    width: 260px;
+  }
+}

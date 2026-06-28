@@ -1,0 +1,72 @@
+@use '../base/variables' as *;
+
+.navegacion {
+  width: min(100% - 2rem, $ancho-contenido);
+  margin: 0 auto;
+  padding: 0.75rem 0;
+  border-top: 1px solid $color-borde;
+  border-bottom: 1px solid $color-borde;
+}
+
+.navegacion__lista,
+.navegacion__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navegacion__acciones {
+  margin-top: 1rem;
+}
+
+.navegacion__enlace {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  color: $color-principal;
+  font-weight: 700;
+  border-bottom: 2px solid transparent;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.navegacion__enlace:hover,
+.navegacion__enlace.active {
+  color: $color-principal-claro;
+  border-bottom-color: $color-principal;
+}
+
+@media (min-width: $bp-tablet) {
+  .navegacion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .navegacion__lista,
+  .navegacion__acciones {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .navegacion__acciones {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: $bp-desktop) {
+  .navegacion {
+    padding: 0.5rem 0;
+  }
+
+  .navegacion__lista,
+  .navegacion__acciones {
+    gap: 1.25rem;
+  }
+}

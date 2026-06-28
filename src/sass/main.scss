@@ -2,6 +2,10 @@
 @use './base/global';
 
 @use './components/botones';
-@use './components/tarjetas';
+@use './components/cabecera';
+@use './components/navegacion';
+@use './components/pie';
+@use './components/formularios';
 
 @use './pages/inicio';
+@use './pages/auth';

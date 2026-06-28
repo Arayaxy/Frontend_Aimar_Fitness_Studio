@@ -1,0 +1,42 @@
+@use '../base/variables' as *;
+
+.auth {
+  width: min(100% - 2rem, 520px);
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.auth__contenedor {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid $color-borde;
+  border-radius: $radio;
+  background-color: $color-superficie;
+}
+
+.auth__titulo {
+  color: $color-principal;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.auth__texto,
+.auth__mensaje {
+  color: $color-texto-suave;
+  line-height: 1.6;
+}
+
+.auth__mensaje {
+  margin: 0;
+}
+
+@media (min-width: $bp-tablet) {
+  .auth {
+    padding: 3rem 0;
+  }
+
+  .auth__contenedor {
+    padding: 2rem;
+  }
+}
